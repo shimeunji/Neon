@@ -13,7 +13,6 @@ public class S {
     public static final int CROP_FROM_iMAGE = 2;
 
     public static Uri mImageCaptureUri;
-    public static ImageView iv_UserPhoto;
     public static String absoultePath;
 
     public static int check=0;

@@ -34,7 +34,7 @@ Button img;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        img = (Button) findViewById(R.id.start);
+        img = (Button) findViewById(R.id.startbutton);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

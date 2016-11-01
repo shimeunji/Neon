@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WorkAcitivity"></activity>
+        <activity android:name=".WorkAcitivity"
+            android:theme="@style/AppThemes"
+            ></activity>
 
     </application>
 

@@ -2,9 +2,79 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/back"/>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="100px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_marginLeft="40px"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="40px"
+                android:id="@+id/cut"
+                android:background="@drawable/cut"
+                />
+
+            <ImageButton
+                android:layout_marginLeft="40px"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="40px"
+                android:id="@+id/color"
+                android:background="@drawable/color"
+                />
+
+            <ImageButton
+                android:layout_marginLeft="40px"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="40px"
+                android:id="@+id/setting"
+                android:background="@drawable/settings"
+                />
+
+            <ImageButton
+                android:layout_marginLeft="40px"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="40px"
+                android:id="@+id/back"
+                android:background="@drawable/back"
+                />
+
+            <ImageButton
+                android:layout_marginLeft="40px"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="40px"
+                android:id="@+id/garbage"
+                android:background="@drawable/garbage"
+                />
+
+            <ImageButton
+                android:layout_marginLeft="40px"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="40px"
+                android:id="@+id/temp_download"
+                android:background="@drawable/checked"
+                />
+
+            <ImageButton
+                android:layout_marginLeft="40px"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="40px"
+                android:id="@+id/download"
+                android:background="@drawable/download"
+                />
+        </LinearLayout>
+    </HorizontalScrollView>
+
 </LinearLayout>
