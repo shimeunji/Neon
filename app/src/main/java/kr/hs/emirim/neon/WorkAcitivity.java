@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +34,9 @@ import org.w3c.dom.Text;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.*;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 import static android.R.id.message;
 import static kr.hs.emirim.neon.R.styleable.AlertDialog;
 
@@ -43,6 +47,7 @@ import static kr.hs.emirim.neon.R.styleable.AlertDialog;
 
 public class WorkAcitivity extends AppCompatActivity {
 
+    PhotoViewAttacher mAttacher;
     Button write, font, color,size,neon;
     ImageView pho;
     TextView text;
@@ -166,30 +171,32 @@ public class WorkAcitivity extends AppCompatActivity {
         neon.setOnClickListener(new View.OnClickListener(){
             public  void onClick(View view)
             {
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(40, 60);
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(100, 100);
                         text.setLayoutParams(layoutParams);
                       //  text.setText("testing 1 2 3");
                        // text.setTextColor(Color.BLACK);
                         text.setBackgroundColor(Color.TRANSPARENT);
                         Bitmap testB;
-                        testB = Bitmap.createBitmap(40, 60, Bitmap.Config.ARGB_8888);
+                        testB = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
                         Canvas c = new Canvas(testB);
-                        text.layout(0, 0, 40, 500);
+                        text.layout(0, 0, 100, 100);
                         text.draw(c);
                         ImageView iv = (ImageView)findViewById(R.id.img1);
                         //  iv.setLayoutParams(layoutParams);iv.setBackgroundColor(Color.GRAY);
+                     //   iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
                         iv.setImageBitmap(testB);
-                        iv.setMaxHeight(40);
-                        iv.setMaxWidth(50);
+                        mAttacher=new PhotoViewAttacher(iv);
+                        //iv.setMaxHeight(28);
+                        //iv.setMaxWidth(28);
 
                 if (co == 0) {
-                    text.setShadowLayer(10, 0, 0, Color.RED);
+                    text.setShadowLayer(5, 0, 0, Color.RED);
                 } else if (co == 1) {
-                    text.setShadowLayer(10, 0, 0, Color.YELLOW);
+                    text.setShadowLayer(5, 0, 0, Color.YELLOW);
                 } else if (co == 2) {
-                    text.setShadowLayer(10, 0, 0, Color.BLUE);
+                    text.setShadowLayer(5, 0, 0, Color.BLUE);
                 } else if (co == 3) {
-                    text.setShadowLayer(10, 0, 0, Color.parseColor("#F3F532"));
+                    text.setShadowLayer(5, 0, 0, Color.parseColor("#F3F532"));
                 }
             }
         });
@@ -209,16 +216,16 @@ public class WorkAcitivity extends AppCompatActivity {
                                 items[id] + " 선택했습니다.",
                                 Toast.LENGTH_SHORT).show();
                         if (id == 0) {
-                            text.setTextSize(10,10);
+                            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
                         } else if (id == 1) {
-                            text.setTextSize(18,18);
+                            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
                         } else if (id == 2) {
-                            text.setTextSize(25,25);
+                            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
                         } else if (id == 3) {
-                            text.setTextSize(33,33);
+                            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
                         }else if(id==4)
                         {
-                            text.setTextSize(40,40);
+                            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 35);
                         }
                         dialog.dismiss();
                     }
@@ -245,6 +252,8 @@ public class WorkAcitivity extends AppCompatActivity {
 
             intent.putExtra(MediaStore.EXTRA_OUTPUT, S.mImageCaptureUri);
             startActivityForResult(intent, S.PICK_FROM_CAMERA);
+
+
 
     }
 
@@ -281,8 +290,8 @@ public class WorkAcitivity extends AppCompatActivity {
                 intent.setDataAndType(S.mImageCaptureUri, "image/*");
 
                 // CROP할 이미지를 500*500 크기로 저장
-                intent.putExtra("outputX", 500); // CROP한 이미지의 x축 크기
-                intent.putExtra("outputY", 500); // CROP한 이미지의 y축 크기
+                intent.putExtra("outputX", 1000); // CROP한 이미지의 x축 크기
+                intent.putExtra("outputY", 1000); // CROP한 이미지의 y축 크기
                 intent.putExtra("aspectX", 1); // CROP 박스의 X축 비율
                 intent.putExtra("aspectY", 1); // CROP 박스의 Y축 비율
                 intent.putExtra("scale", true);

@@ -23,16 +23,15 @@ import static android.support.v7.appcompat.R.styleable.AlertDialog;
 
 public class MainActivity extends Activity {
 
-Button img;
-
-
+    ImageButton img;
+    final int REQ_CODE_SELECT_IMAGE=100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        img = (Button) findViewById(R.id.start);
+        img = (ImageButton) findViewById(R.id.start);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
