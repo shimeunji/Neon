@@ -1,80 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#b6b6b6"
+    android:gravity="center">
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        >
+
         <LinearLayout
-            android:layout_marginTop="100px"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:layout_marginLeft="40px"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="40px"
-                android:id="@+id/cut"
-                android:background="@drawable/cut"
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="글쓰기"
+                android:id="@+id/btn_write"
                 />
-
-            <ImageButton
-                android:layout_marginLeft="40px"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="40px"
-                android:id="@+id/color"
-                android:background="@drawable/color"
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="폰트변경"
+                android:id="@+id/btn_font"
                 />
-
-            <ImageButton
-                android:layout_marginLeft="40px"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="40px"
-                android:id="@+id/setting"
-                android:background="@drawable/settings"
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:text="색변경"
+                android:id="@+id/btn_chcolor"
                 />
-
-            <ImageButton
-                android:layout_marginLeft="40px"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="40px"
-                android:id="@+id/back"
-                android:background="@drawable/back"
-                />
-
-            <ImageButton
-                android:layout_marginLeft="40px"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="40px"
-                android:id="@+id/garbage"
-                android:background="@drawable/garbage"
-                />
-
-            <ImageButton
-                android:layout_marginLeft="40px"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="40px"
-                android:id="@+id/temp_download"
-                android:background="@drawable/checked"
-                />
-
-            <ImageButton
-                android:layout_marginLeft="40px"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="40px"
-                android:id="@+id/download"
-                android:background="@drawable/download"
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/btn_size"
+                android:text="글씨크기"
+            />
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/btn_neon"
+                android:text="네온효과"
                 />
         </LinearLayout>
-    </HorizontalScrollView>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/back"/>
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:id="@+id/img1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_write"
+                android:layout_alignBottom="@id/back"
+                android:layout_alignLeft="@id/back"
+                android:layout_alignRight="@id/back"
+                android:layout_alignTop="@id/back"
+                android:gravity="center"
+                android:textColor="#000000"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 </LinearLayout>

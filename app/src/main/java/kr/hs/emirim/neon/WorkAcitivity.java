@@ -1,15 +1,15 @@
 package kr.hs.emirim.neon;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
+
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,13 +17,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.provider.*;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import android.os.*;
 
-import java.io.BufferedOutputStream;
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.io.FileOutputStream;
-
+import java.io.*;
 import static android.R.id.message;
+import static kr.hs.emirim.neon.R.styleable.AlertDialog;
+
 
 /**
  * Created by 내컴퓨터 on 2016-10-31.
@@ -31,52 +43,78 @@ import static android.R.id.message;
 
 public class WorkAcitivity extends AppCompatActivity {
 
-    Button write,font,color;
+    Button write, font, color,size,neon;
     ImageView pho;
-    EditText text;
+    TextView text;
+    final CharSequence[] c_items = {"빨간색", "노란색", "파란색", "귤색"};
+    int co;
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work);
         pho = (ImageView) findViewById(R.id.back);
-        write=(Button)findViewById(R.id.btn_write);
-        font=(Button)findViewById(R.id.btn_font);
-        color=(Button)findViewById(R.id.btn_chcolor);
-        text=(EditText)findViewById(R.id.edit_write);
-        if(S.check==1)doTakePhotoAction();
-        else if(S.check==2)doTakeAlbumAction();
+        write = (Button) findViewById(R.id.btn_write);
+        font = (Button) findViewById(R.id.btn_font);
+        color = (Button) findViewById(R.id.btn_chcolor);
+        size = (Button) findViewById(R.id.btn_size);
+        neon = (Button) findViewById(R.id.btn_neon);
+        text = (TextView) findViewById(R.id.edit_write);
+        if (S.check == 1) doTakePhotoAction();
+        else if (S.check == 2) doTakeAlbumAction();
 
         write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                android.app.AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getLayoutInflater().getContext());
+                alertDialogBuilder.setTitle("문구 입력");
+                final EditText name = new EditText(getBaseContext());
+                alertDialogBuilder.setView(name);
+                alertDialogBuilder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                      //  String username = name.getText().toString();
+                        text.setText(name.getText().toString());
+
+                    }
+
+                });
+                alertDialogBuilder.setNegativeButton("no",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                });
+
+                alertDialogBuilder.show();
             }
         });
+
         color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final CharSequence[] items = { "빨간색", "노란색", "파란색", "귤색" };
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getLayoutInflater().getContext());
+                android.app.AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getLayoutInflater().getContext());
                 alertDialogBuilder.setTitle("글자 색 변경");
-                alertDialogBuilder.setItems(items,new DialogInterface.OnClickListener(){
+                alertDialogBuilder.setItems(c_items, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
+                        co=id;
                         // 프로그램을 종료한다
                         Toast.makeText(getApplicationContext(),
-                                items[id] + " 선택했습니다.",
+                                c_items[id] + " 선택했습니다.",
                                 Toast.LENGTH_SHORT).show();
-                        if(id==0)
-                        {
+                        if (id == 0) {
                             text.setTextColor(Color.RED);
-                        }else if(id==1)
-                        {
+                        } else if (id == 1) {
                             text.setTextColor(Color.YELLOW);
-                        }else if(id==2)
-                        {
+                        } else if (id == 2) {
                             text.setTextColor(Color.BLUE);
 
-                        }else if(id==3)
-                        {
+                        } else if (id == 3) {
                             text.setTextColor(Color.parseColor("#F3F532"));
 
                         }
@@ -92,55 +130,122 @@ public class WorkAcitivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final CharSequence[] items = { "나눔 고딕", "아리따 돋움", "맑은 고딕", "굴림" };
+                final CharSequence[] items = {"나눔 고딕", "아리따 돋움", "맑은 고딕", "굴림"};
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getLayoutInflater().getContext());
                 alertDialogBuilder.setTitle("폰트 선택");
-                alertDialogBuilder.setItems(items,new DialogInterface.OnClickListener(){
-                            public void onClick(DialogInterface dialog, int id) {
+                alertDialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
-                                // 프로그램을 종료한다
-                                Toast.makeText(getApplicationContext(),
-                                        items[id] + " 선택했습니다.",
-                                        Toast.LENGTH_SHORT).show();
-                                if(id==0)
-                                {
-                                    Typeface typeFace = Typeface.createFromAsset(getAssets(), "aGodic.ttf");
-                                    text.setTypeface(typeFace);
-                                }else if(id==1)
-                                {
-                                    Typeface typeFace = Typeface.createFromAsset(getAssets(), "arita.ttf");
-                                    text.setTypeface(typeFace);
-                                }else if(id==2)
-                                {
-                                    Typeface typeFace = Typeface.createFromAsset(getAssets(), "malgun.ttf");
-                                    text.setTypeface(typeFace);
-                                }else if(id==3)
-                                {
-                                    Typeface typeFace = Typeface.createFromAsset(getAssets(), "gulim.ttf");
-                                    text.setTypeface(typeFace);
-                                }
-                                dialog.dismiss();
-                            }
-                        });
+                        // 프로그램을 종료한다
+                        Toast.makeText(getApplicationContext(),
+                                items[id] + " 선택했습니다.",
+                                Toast.LENGTH_SHORT).show();
+                        if (id == 0) {
+                            Typeface typeFace = Typeface.createFromAsset(getAssets(), "aGodic.ttf");
+                            text.setTypeface(typeFace);
+                        } else if (id == 1) {
+                            Typeface typeFace = Typeface.createFromAsset(getAssets(), "arita.ttf");
+                            text.setTypeface(typeFace);
+                        } else if (id == 2) {
+                            Typeface typeFace = Typeface.createFromAsset(getAssets(), "malgun.ttf");
+                            text.setTypeface(typeFace);
+                        } else if (id == 3) {
+                            Typeface typeFace = Typeface.createFromAsset(getAssets(), "gulim.ttf");
+                            text.setTypeface(typeFace);
+                        }
+                        dialog.dismiss();
+                    }
+                });
                 AlertDialog alertDialog1 = alertDialogBuilder.create();
-
                 alertDialog1.show();
 
             }
         });
 
+        neon.setOnClickListener(new View.OnClickListener(){
+            public  void onClick(View view)
+            {
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(40, 60);
+                        text.setLayoutParams(layoutParams);
+                      //  text.setText("testing 1 2 3");
+                       // text.setTextColor(Color.BLACK);
+                        text.setBackgroundColor(Color.TRANSPARENT);
+                        Bitmap testB;
+                        testB = Bitmap.createBitmap(40, 60, Bitmap.Config.ARGB_8888);
+                        Canvas c = new Canvas(testB);
+                        text.layout(0, 0, 40, 500);
+                        text.draw(c);
+                        ImageView iv = (ImageView)findViewById(R.id.img1);
+                        //  iv.setLayoutParams(layoutParams);iv.setBackgroundColor(Color.GRAY);
+                        iv.setImageBitmap(testB);
+                        iv.setMaxHeight(40);
+                        iv.setMaxWidth(50);
+
+                if (co == 0) {
+                    text.setShadowLayer(10, 0, 0, Color.RED);
+                } else if (co == 1) {
+                    text.setShadowLayer(10, 0, 0, Color.YELLOW);
+                } else if (co == 2) {
+                    text.setShadowLayer(10, 0, 0, Color.BLUE);
+                } else if (co == 3) {
+                    text.setShadowLayer(10, 0, 0, Color.parseColor("#F3F532"));
+                }
+            }
+        });
+        size.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final CharSequence[] items = {"아주 작게", "작게", "보통", "크게","매우 크게"};
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getLayoutInflater().getContext());
+                alertDialogBuilder.setTitle("폰트 크기 선택");
+                alertDialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        // 프로그램을 종료한다
+                        Toast.makeText(getApplicationContext(),
+                                items[id] + " 선택했습니다.",
+                                Toast.LENGTH_SHORT).show();
+                        if (id == 0) {
+                            text.setTextSize(10,10);
+                        } else if (id == 1) {
+                            text.setTextSize(18,18);
+                        } else if (id == 2) {
+                            text.setTextSize(25,25);
+                        } else if (id == 3) {
+                            text.setTextSize(33,33);
+                        }else if(id==4)
+                        {
+                            text.setTextSize(40,40);
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alertDialog1 = alertDialogBuilder.create();
+                alertDialog1.show();
+
+            }
+        });
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
     public void doTakePhotoAction() // 카메라 촬영 후 이미지 가져오기
     {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        // 임시로 사용할 파일의 경로를 생성
-        String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
-        S.mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), url));
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, S.mImageCaptureUri);
-        startActivityForResult(intent, S.PICK_FROM_CAMERA);
+            // 임시로 사용할 파일의 경로를 생성
+            String url = "tmp_" + String.valueOf(System.currentTimeMillis()) + ".jpg";
+            S.mImageCaptureUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), url));
+
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, S.mImageCaptureUri);
+            startActivityForResult(intent, S.PICK_FROM_CAMERA);
+
     }
 
     /**
@@ -150,18 +255,18 @@ public class WorkAcitivity extends AppCompatActivity {
     {
         // 앨범 호출
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, S.PICK_FROM_ALBUM);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK)
             return;
 
-        switch(requestCode) {
+        switch (requestCode) {
             case S.PICK_FROM_ALBUM: {
                 // 이후의 처리가 카메라와 같으므로 일단  break없이 진행합니다.
                 // 실제 코드에서는 좀더 합리적인 방법을 선택하시기 바랍니다.
@@ -186,7 +291,6 @@ public class WorkAcitivity extends AppCompatActivity {
                 break;
             }
             case S.CROP_FROM_iMAGE: {
-                // 크
                 //
                 // 롭이 된 이후의 이미지를 넘겨 받습니다.
                 // 이미지뷰에 이미지를 보여준다거나 부가적인 작업 이후에
@@ -216,7 +320,17 @@ public class WorkAcitivity extends AppCompatActivity {
                     f.delete();
                 }
             }
-        }}
+        }
+    }
+
+    public static Bitmap loadBitmapFromView(View v) {
+        Bitmap b = Bitmap.createBitmap(80, 100, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.layout(0, 0, 80, 100);
+        v.draw(c);
+        return b;
+    }
+
     private void storeCropImage(Bitmap bitmap, String filePath) {
         // SmartWheel 폴더를 생성하여 이미지를 저장하는 방식이다.
         String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SmartWheel";
@@ -232,10 +346,10 @@ public class WorkAcitivity extends AppCompatActivity {
 
             copyFile.createNewFile();
             out = new BufferedOutputStream(new FileOutputStream(copyFile));
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 500, out);
-
+           // bitmap.compress(android.graphics.Bitmap.CompressFormat.JPEG, 500, out);
+            //bitmap.compress(Bitmap.CompressFormat.JPEG, 500, out);
             // sendBroadcast를 통해 Crop된 사진을 앨범에 보이도록 갱신한다.
-            sendBroadcast(new Intent(android.content.Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                     Uri.fromFile(copyFile)));
 
             out.flush();
@@ -244,7 +358,40 @@ public class WorkAcitivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("WorkAcitivity Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
 }
-
-
-

@@ -1,13 +1,12 @@
 package kr.hs.emirim.neon;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +15,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
 import static android.R.attr.bitmap;
-import static kr.hs.emirim.neon.S.check;
+import static android.support.v7.appcompat.R.styleable.AlertDialog;
 
 public class MainActivity extends Activity {
 
@@ -34,7 +32,7 @@ Button img;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        img = (Button) findViewById(R.id.startbutton);
+        img = (Button) findViewById(R.id.start);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
